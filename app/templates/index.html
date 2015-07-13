@@ -5,14 +5,28 @@
 	<p>The current time is {{ moment(current_time).format('LLL') }}</p>
 	{% if current_user.can(Permission.WRITE_ARTICLES) %}
 		{{ wtf.quick_form(form)}}
+	    
+	    {% if current_user.is_authenticated() %}
+			<ul class="nav nav-tabs">
+		                <li  class="active">
+		                    <a href="{{ url_for('main.show_all', username=current_username) }}">All</a>
+		                </li>
+		                <li >
+		                    <a href="{{ url_for('main.show_followed', username=current_username) }}">Followers</a>
+		                </li>
+		     </ul>
+
+
+        {% endif %}
 
 		{% include '_posts.html' %}
+
 
 		<div class="pagniation">
 			{{ macros.pagination_widget(pagination, 'main.index')}}
 		</div>
 	{% endif %}
-	
+
 
 {% endblock %}
 
